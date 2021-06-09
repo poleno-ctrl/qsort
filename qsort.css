@@ -1,0 +1,24 @@
+void Qsort(vector<long long>& collection, long long L, long long R) {
+	if (R - L <= 1) return;
+	long long mid1 = collection[L];
+	long long mid2 = collection[(R+L)/2];
+	long long mid3 = collection[R-1];
+	long long mid = mid1 + mid2 + mid3 - min({ mid1, mid2, mid3 }) - max({ mid1, mid2, mid3 });
+	long long x = L, y = L;
+	for (int i = L; i < R; i++) {
+		if (collection[i] < mid) {
+			swap(collection[i], collection[x]);
+			if (x != y) {
+				swap(collection[i], collection[y]);
+			}
+			x++;
+			y++;
+		}
+		if (collection[i] == mid) {
+			swap(collection[i], collection[y]);
+			y++;
+		}
+	}
+	Qsort(collection, L, x);
+	Qsort(collection, y, R);
+}
